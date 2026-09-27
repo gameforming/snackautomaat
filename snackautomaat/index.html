@@ -10,13 +10,12 @@
 
     <title>Snackautomaat</title>
 
-    <!-- CSS uit dezelfde map -->
+    <!-- Styling -->
     <link rel="stylesheet" href="./style.css">
 
-    <!-- PWA manifest uit dezelfde map -->
+    <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
 
-    <!-- PWA instellingen -->
     <meta name="theme-color" content="#18202a">
 
     <meta
@@ -40,50 +39,181 @@
     >
 </head>
 
+
 <body>
 
-    <header class="app-header">
+    <!-- =========================
+         TOPBAR
+    ========================== -->
+
+    <header class="topbar">
+
         <div>
             <h1>🍫 Snackautomaat</h1>
-            <p>Houdbaarheidsoverzicht</p>
+
+            <p>
+                Houdbaarheidsoverzicht
+            </p>
         </div>
+
+        <button
+            id="addProductButton"
+            class="primary-button"
+            type="button"
+        >
+            + Product toevoegen
+        </button>
+
     </header>
 
 
     <main>
 
-        <!-- Overzicht -->
-        <section class="overview-section">
+        <!-- =========================
+             OVERZICHT
+        ========================== -->
 
-            <h2>Overzicht</h2>
+        <section class="overview">
 
-            <div
-                id="statusOverview"
-                class="status-overview"
-            ></div>
+            <div class="section-title">
+
+                <div>
+                    <h2>Overzicht</h2>
+
+                    <p>
+                        Houd de houdbaarheid van alle producten in de gaten.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="status-grid">
+
+                <button
+                    class="status-card green"
+                    data-filter="green"
+                    type="button"
+                >
+
+                    <span class="status-icon">
+                        🟩
+                    </span>
+
+                    <strong id="greenCount">
+                        0
+                    </strong>
+
+                    <span>
+                        10+ dagen
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="status-card orange"
+                    data-filter="orange"
+                    type="button"
+                >
+
+                    <span class="status-icon">
+                        🟧
+                    </span>
+
+                    <strong id="orangeCount">
+                        0
+                    </strong>
+
+                    <span>
+                        5–9 dagen
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="status-card red"
+                    data-filter="red"
+                    type="button"
+                >
+
+                    <span class="status-icon">
+                        🟥
+                    </span>
+
+                    <strong id="redCount">
+                        0
+                    </strong>
+
+                    <span>
+                        2–4 dagen
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="status-card expired"
+                    data-filter="expired"
+                    type="button"
+                >
+
+                    <span class="status-icon">
+                        ☠️
+                    </span>
+
+                    <strong id="expiredCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Vandaag / verlopen
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <button
+                id="clearFilterButton"
+                class="filter-button hidden"
+                type="button"
+            >
+                Toon alle vakken
+            </button>
 
         </section>
 
 
-        <!-- Automaat -->
+        <!-- =========================
+             SNACKAUTOMAAT
+        ========================== -->
+
         <section class="machine-section">
 
-            <div class="section-header">
+            <div class="section-title">
 
                 <div>
-                    <h2>Snackautomaat</h2>
+
+                    <h2>
+                        Snackautomaat
+                    </h2>
 
                     <p>
-                        Klik op een vak voor de producten.
+                        Elk vak bevat de producten in verkoopvolgorde.
                     </p>
+
                 </div>
+
 
                 <button
                     id="addSlotButton"
                     class="primary-button"
                     type="button"
                 >
-                    ＋ Vak toevoegen
+                    + Vak toevoegen
                 </button>
 
             </div>
@@ -94,32 +224,95 @@
                 class="slots-container"
             ></div>
 
+
+            <!-- Lege automaat -->
+
+            <div
+                id="emptyState"
+                class="empty-state"
+            >
+
+                <div class="empty-icon">
+                    🏪
+                </div>
+
+                <h3>
+                    Nog geen vakken
+                </h3>
+
+                <p>
+                    Maak eerst een vak aan voor je producten toevoegt.
+                </p>
+
+                <button
+                    id="emptyAddSlotButton"
+                    class="primary-button"
+                    type="button"
+                >
+                    + Eerste vak toevoegen
+                </button>
+
+            </div>
+
+
+            <p
+                id="machineSummary"
+                style="
+                    color: var(--muted);
+                    font-size: 13px;
+                    margin-top: 14px;
+                "
+            >
+                0 vakken • 0 producten
+            </p>
+
         </section>
 
+    </main>
 
-        <!-- Product toevoegen -->
-        <section class="add-product-section">
 
-            <div class="section-header">
+    <!-- =========================
+         PRODUCT TOEVOEGEN MODAL
+    ========================== -->
+
+    <div
+        id="productModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
 
                 <div>
-                    <h2>Product toevoegen</h2>
+
+                    <h2>
+                        Product toevoegen
+                    </h2>
 
                     <p>
-                        Voeg een product toe aan een vak.
+                        Voeg één of meerdere producten toe aan een vak.
                     </p>
+
                 </div>
+
+
+                <button
+                    class="close-button"
+                    type="button"
+                    data-close="productModal"
+                    aria-label="Sluiten"
+                >
+                    ×
+                </button>
 
             </div>
 
 
             <form id="productForm">
 
-                <div class="form-group">
-
-                    <label for="productName">
-                        Product
-                    </label>
+                <label>
+                    Product
 
                     <input
                         id="productName"
@@ -127,44 +320,32 @@
                         placeholder="Bijvoorbeeld Coca Cola"
                         required
                     >
+                </label>
 
-                </div>
 
-
-                <div class="form-group">
-
-                    <label for="productSlot">
-                        Vaknummer
-                    </label>
+                <label>
+                    Vak
 
                     <select
                         id="productSlot"
                         required
                     ></select>
+                </label>
 
-                </div>
 
-
-                <div class="form-group">
-
-                    <label for="productDate">
-                        Houdbaar tot
-                    </label>
+                <label>
+                    Houdbaar tot
 
                     <input
                         id="productDate"
                         type="date"
                         required
                     >
+                </label>
 
-                </div>
 
-
-                <div class="form-group">
-
-                    <label for="productAmount">
-                        Aantal
-                    </label>
+                <label>
+                    Aantal
 
                     <input
                         id="productAmount"
@@ -173,27 +354,119 @@
                         value="1"
                         required
                     >
+                </label>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-close="productModal"
+                    >
+                        Annuleren
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Product toevoegen
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         VAK TOEVOEGEN MODAL
+    ========================== -->
+
+    <div
+        id="slotModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content small-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Vak toevoegen
+                    </h2>
+
+                    <p>
+                        Geef het vak een nummer.
+                    </p>
 
                 </div>
 
 
                 <button
-                    type="submit"
-                    class="primary-button"
+                    class="close-button"
+                    type="button"
+                    data-close="slotModal"
+                    aria-label="Sluiten"
                 >
-                    ＋ Product toevoegen
+                    ×
                 </button>
+
+            </div>
+
+
+            <form id="slotForm">
+
+                <label>
+                    Vaknummer
+
+                    <input
+                        id="slotNumber"
+                        type="number"
+                        min="1"
+                        required
+                    >
+                </label>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-close="slotModal"
+                    >
+                        Annuleren
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Vak toevoegen
+                    </button>
+
+                </div>
 
             </form>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
 
 
-    <!-- Productdetails -->
+    <!-- =========================
+         VAK DETAILS MODAL
+    ========================== -->
+
     <div
-        id="detailsModal"
+        id="slotDetailsModal"
         class="modal hidden"
     >
 
@@ -201,25 +474,33 @@
 
             <div class="modal-header">
 
-                <h2 id="modalTitle">
-                    Producten
-                </h2>
+                <div>
+
+                    <h2 id="detailsTitle">
+                        Vak
+                    </h2>
+
+                    <p id="detailsSubtitle">
+                        Producten
+                    </p>
+
+                </div>
+
 
                 <button
-                    id="closeModalButton"
                     class="close-button"
                     type="button"
+                    data-close="slotDetailsModal"
                     aria-label="Sluiten"
                 >
-                    ✕
+                    ×
                 </button>
 
             </div>
 
 
             <div
-                id="modalProducts"
-                class="modal-products"
+                id="slotDetailsContent"
             ></div>
 
         </div>
@@ -227,40 +508,58 @@
     </div>
 
 
-    <!-- JavaScript uit dezelfde map -->
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script src="./app.js"></script>
 
 
-    <!-- PWA Service Worker uit dezelfde map -->
+    <!-- =========================
+         SERVICE WORKER
+    ========================== -->
+
     <script>
+
         if ("serviceWorker" in navigator) {
 
-            window.addEventListener("load", () => {
+            window.addEventListener(
+                "load",
+                () => {
 
-                navigator.serviceWorker
-                    .register("./service-worker.js", {
-                        scope: "./"
-                    })
-                    .then(registration => {
+                    navigator.serviceWorker
+                        .register(
+                            "./service-worker.js",
+                            {
+                                scope: "./"
+                            }
+                        )
+                        .then(
+                            registration => {
 
-                        console.log(
-                            "Service worker geladen:",
-                            registration.scope
+                                console.log(
+                                    "Service worker geladen:",
+                                    registration.scope
+                                );
+
+                            }
+                        )
+                        .catch(
+                            error => {
+
+                                console.error(
+                                    "Service worker fout:",
+                                    error
+                                );
+
+                            }
                         );
 
-                    })
-                    .catch(error => {
-
-                        console.error(
-                            "Service worker fout:",
-                            error
-                        );
-
-                    });
-
-            });
+                }
+            );
 
         }
+
     </script>
 
 </body>
