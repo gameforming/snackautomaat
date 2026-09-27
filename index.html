@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Snackautomaat</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div>
+            <h1>🍫 Snackautomaat</h1>
+            <p>Houdbaarheidsoverzicht</p>
+        </div>
+
+        <button id="addProductButton" class="primary-button">
+            + Product
+        </button>
+    </header>
+
+
+    <main>
+
+        <!-- OVERZICHT -->
+        <section class="overview">
+
+            <h2>Overzicht</h2>
+
+            <div class="status-grid">
+
+                <button class="status-card green" data-filter="green">
+                    <span class="status-icon">🟩</span>
+                    <strong id="greenCount">0</strong>
+                    <span>10+ dagen</span>
+                </button>
+
+                <button class="status-card orange" data-filter="orange">
+                    <span class="status-icon">🟧</span>
+                    <strong id="orangeCount">0</strong>
+                    <span>5–9 dagen</span>
+                </button>
+
+                <button class="status-card red" data-filter="red">
+                    <span class="status-icon">🟥</span>
+                    <strong id="redCount">0</strong>
+                    <span>2–4 dagen</span>
+                </button>
+
+                <button class="status-card expired" data-filter="expired">
+                    <span class="status-icon">☠️</span>
+                    <strong id="expiredCount">0</strong>
+                    <span>Verlopen</span>
+                </button>
+
+            </div>
+
+            <button id="clearFilterButton" class="filter-button hidden">
+                Toon alle vakken
+            </button>
+
+        </section>
+
+
+        <!-- VAKKEN -->
+        <section class="machine-section">
+
+            <div class="section-title">
+                <div>
+                    <h2>Automaat</h2>
+                    <p id="machineSummary">0 vakken</p>
+                </div>
+
+                <button id="addSlotButton" class="secondary-button">
+                    + Vak
+                </button>
+            </div>
+
+            <div id="slotsContainer" class="slots-container"></div>
+
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">🏪</div>
+                <h3>Nog geen vakken</h3>
+                <p>Voeg je eerste vak toe om te beginnen.</p>
+
+                <button id="emptyAddSlotButton" class="primary-button">
+                    + Eerste vak toevoegen
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- PRODUCT TOEVOEGEN -->
+    <div id="productModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div>
+                    <h2>Product toevoegen</h2>
+                    <p>Voeg een product toe aan een vak.</p>
+                </div>
+
+                <button class="close-button" data-close="productModal">
+                    ×
+                </button>
+            </div>
+
+            <form id="productForm">
+
+                <label>
+                    Productnaam
+                    <input
+                        id="productName"
+                        type="text"
+                        placeholder="Bijvoorbeeld Mars"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Vaknummer
+                    <select id="productSlot" required></select>
+                </label>
+
+                <label>
+                    Houdbaar tot
+                    <input
+                        id="productDate"
+                        type="date"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Aantal
+                    <input
+                        id="productAmount"
+                        type="number"
+                        min="1"
+                        max="100"
+                        value="1"
+                        required
+                    >
+                </label>
+
+                <div class="form-actions">
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-close="productModal"
+                    >
+                        Annuleren
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        Toevoegen
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- VAK TOEVOEGEN -->
+    <div id="slotModal" class="modal hidden">
+
+        <div class="modal-content small-modal">
+
+            <div class="modal-header">
+                <div>
+                    <h2>Vak toevoegen</h2>
+                    <p>Kies een nummer voor het vak.</p>
+                </div>
+
+                <button class="close-button" data-close="slotModal">
+                    ×
+                </button>
+            </div>
+
+            <form id="slotForm">
+
+                <label>
+                    Vaknummer
+                    <input
+                        id="slotNumber"
+                        type="number"
+                        min="1"
+                        max="999"
+                        required
+                    >
+                </label>
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-close="slotModal"
+                    >
+                        Annuleren
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        Vak toevoegen
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- VAK DETAILS -->
+    <div id="slotDetailsModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="detailsTitle">Vak</h2>
+                    <p id="detailsSubtitle"></p>
+                </div>
+
+                <button class="close-button" data-close="slotDetailsModal">
+                    ×
+                </button>
+
+            </div>
+
+            <div id="slotDetailsContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
