@@ -3,8 +3,6 @@
     "short_name": "Snackautomaat",
     "description": "Houdbaarheidsoverzicht voor de snackautomaat",
 
-    "id": "./",
-
     "start_url": "./",
     "scope": "./",
 
