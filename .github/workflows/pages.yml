@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -24,22 +24,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Prepare website
         run: |
+          rm -rf _site
           mkdir _site
-          cp -r snackautomaat/* _site/
+
+          cp -r snackautomaat/. _site/
+
+          echo "Website files:"
+          find _site -maxdepth 2 -type f
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
