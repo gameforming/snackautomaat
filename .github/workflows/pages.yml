@@ -12,40 +12,49 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup GitHub Pages
+      - name: Show files
+        run: |
+          echo "=== ROOT ==="
+          ls -la
+          echo "=== SNACKAUTOMAAT ==="
+          ls -la snackautomaat
+          echo "=== MANIFEST ==="
+          cat snackautomaat/manifest.json
+
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Prepare website
         run: |
           rm -rf _site
           mkdir _site
+          cp -a snackautomaat/. _site/
 
-          cp -r snackautomaat/. _site/
-
-          echo "Website files:"
-          find _site -maxdepth 2 -type f
+      - name: Show website
+        run: |
+          echo "=== FINAL WEBSITE ==="
+          find _site -maxdepth 2 -type f -print
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
